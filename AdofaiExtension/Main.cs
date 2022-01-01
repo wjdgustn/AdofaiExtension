@@ -56,7 +56,7 @@ namespace AdofaiExtension {
                 Mod.Logger.Log("created runner.bat");
             }
 
-            var result = FileAssociations.SetAssociation(".adofai", "adofai", "A Dance of Fire and Ice level file.",
+            var result = FileAssociations.SetAssociation(".adofai", "adofai", "A Dance of Fire and Ice Level",
                 $"{Path.GetFullPath(".")}\\runner.bat", $"{Path.GetFullPath(".")}\\{Application.productName}.exe");
             Mod.Logger.Log(result ? "registry add success" : "registry add failed");
         }
