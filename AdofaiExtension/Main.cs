@@ -51,7 +51,7 @@ namespace AdofaiExtension {
             if (!File.Exists(runnerPath)) {
                 using (StreamWriter sw = File.CreateText(runnerPath)) {
                     sw.WriteLine($"cd {Path.GetFullPath(".")}");
-                    sw.WriteLine($"start /b \"\" \"{Path.GetFullPath(".")}\\{Application.productName}.exe\" %1");
+                    sw.WriteLine($"start /d \"{Path.GetFullPath(".")}\" /b \"\" \"{Path.GetFullPath(".")}\\{Application.productName}.exe\" %1");
                 }
                 Mod.Logger.Log("created runner.bat");
             }
