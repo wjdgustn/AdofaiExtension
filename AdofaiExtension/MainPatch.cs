@@ -1,5 +1,6 @@
 using ADOFAI;
 using HarmonyLib;
+using UnityEngine;
 
 namespace AdofaiExtension.MainPatch {
     [HarmonyPatch(typeof(scnLevelSelect), "Awake")]
@@ -22,6 +23,7 @@ namespace AdofaiExtension.MainPatch {
 
                 Main.LevelPath = null;
                 Main.LoadedLevel = true;
+                Main.AfterLoadSetting = false;
             }
         }
     }
