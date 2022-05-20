@@ -2,7 +2,7 @@
   "Id": "AdofaiExtension",
   "DisplayName": "AdofaiExtension",
   "Author": "HYONSU",
-  "Version": "0.0.4",
+  "Version": "0.0.5",
   "AssemblyName": "AdofaiExtension.dll",
   "EntryMethod": "AdofaiExtension.Main.Load",
   "Repository": ""

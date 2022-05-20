@@ -17,7 +17,6 @@ namespace AdofaiExtension {
         private static Harmony _harmony;
         internal static bool IsEnabled { get; private set; }
         internal static bool LoadedLevel = false;
-        internal static bool AfterLoadSetting = true;
         internal static string LevelPath;
 
         private static void Load(UnityModManager.ModEntry modEntry) {
@@ -90,7 +89,7 @@ namespace AdofaiExtension {
 
                 SceneManager.LoadScene("scnEditor");
 
-                Mod.Logger.Log("loaded clicked file");
+                Mod.Logger.Log("loaded editor scene");
             }
             else Mod.Logger.Log("file not clicked");
         }
