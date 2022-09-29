@@ -1,7 +1,4 @@
-using System.Reflection;
-using ADOFAI;
 using HarmonyLib;
-using UnityEngine;
 
 namespace AdofaiExtension.MainPatch {
     [HarmonyPatch(typeof(scnLevelSelect), "Awake")]

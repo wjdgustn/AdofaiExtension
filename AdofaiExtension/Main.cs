@@ -19,6 +19,8 @@ namespace AdofaiExtension {
         internal static bool LoadedLevel = false;
         internal static string LevelPath;
 
+        private static readonly string[] SpecialActions = { "openScene" };
+
         private static void Load(UnityModManager.ModEntry modEntry) {
             Mod = modEntry;
             Mod.OnToggle = OnToggle;
@@ -55,7 +57,7 @@ namespace AdofaiExtension {
                 Mod.Logger.Log("created runner.bat");
             }
 
-            var result = FileAssociations.SetAssociation(".adofai", "adofai", "A Dance of Fire and Ice Level",
+            var result = FileAssociations.SetAssociation(".adofai", "adofai", $"{Application.productName} Level",
                 $"{Path.GetFullPath(".")}\\runner.bat", $"{Path.GetFullPath(".")}\\{Application.productName}.exe");
             Mod.Logger.Log(result ? "registry add success" : "registry add failed");
         }
@@ -75,8 +77,10 @@ namespace AdofaiExtension {
         }
 
         public static void OpenLevel(string path = null) {
+            if (LoadedLevel) return;
+            
             var arguments = Environment.GetCommandLineArgs();
-            if (!LoadedLevel && arguments.Length >= 2) {
+            if (arguments.Length >= 2 && !SpecialActions.Contains(arguments[1])) {
                 Mod.Logger.Log("loading clicked file...");
                 
                 path = string.Join(" ", arguments.Skip(1));
@@ -90,6 +94,15 @@ namespace AdofaiExtension {
                 SceneManager.LoadScene("scnEditor");
 
                 Mod.Logger.Log("loaded editor scene");
+            }
+            if(arguments[1] == "openScene") {
+                var name = string.Join(" ", arguments.Skip(2));
+                Mod.Logger.Log($"Loading {name} scene...");
+
+                SceneManager.LoadScene(name);
+                LoadedLevel = true;
+
+                Mod.Logger.Log("loaded scene");
             }
             else Mod.Logger.Log("file not clicked");
         }
