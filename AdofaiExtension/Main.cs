@@ -38,9 +38,31 @@ namespace AdofaiExtension {
 
             return true;
         }
+        
+#if DEBUG
+        private static FileSystemWatcher watcher;
+        private static void OnDllChanged(object source, FileSystemEventArgs e) {
+	        Mod.Logger.Log($"{Mod.Info.Id} mod change detected! Reloading...");
+	        watcher.Changed -= OnDllChanged;
+	        watcher.Dispose();
+	        watcher = null;
+	        Mod.GetType().GetMethod("Reload", BindingFlags.NonPublic | BindingFlags.Instance)?.Invoke(Mod, null);
+        }
+#endif
+        
         private static void Start() {
             _harmony = new Harmony(Mod.Info.Id);
             _harmony.PatchAll(Assembly.GetExecutingAssembly());
+            
+#if DEBUG
+            watcher = new FileSystemWatcher(Mod.Path);
+            watcher.NotifyFilter = NotifyFilters.LastWrite;
+            watcher.Filter = "*.dll";
+
+            watcher.Changed += OnDllChanged;
+
+            watcher.EnableRaisingEvents = true;
+#endif
 
             var appidPath = $"{Path.GetFullPath(".")}\\steam_appid.txt";
             if (!File.Exists(appidPath)) {
@@ -77,10 +99,10 @@ namespace AdofaiExtension {
         }
 
         public static void OpenLevel(string path = null) {
-            if (LoadedLevel) return;
-            
             var arguments = Environment.GetCommandLineArgs();
-            if (arguments.Length >= 2 && !SpecialActions.Contains(arguments[1])) {
+            if (LoadedLevel || arguments.Length < 2) return;
+
+            if (!SpecialActions.Contains(arguments[1])) {
                 Mod.Logger.Log("loading clicked file...");
                 
                 path = string.Join(" ", arguments.Skip(1));

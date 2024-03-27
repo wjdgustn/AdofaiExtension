@@ -1,9 +1,11 @@
 using HarmonyLib;
+using UnityEngine;
 
 namespace AdofaiExtension.MainPatch {
     [HarmonyPatch(typeof(scnLevelSelect), "Awake")]
     internal static class onStart {
         internal static void Postfix() {
+	        scrController.instance.UpdateListenerVolume();
             Main.OpenLevel();
         }
     }
@@ -17,6 +19,8 @@ namespace AdofaiExtension.MainPatch {
                 scnEditor.instance.StartCoroutine("OpenLevelCo", Main.LevelPath);
                 Main.LevelPath = null;
                 Main.LoadedLevel = true;
+
+                scnEditor.instance.SwitchToEditMode();
             }
         }
     }

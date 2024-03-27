@@ -2,8 +2,8 @@
   "Id": "AdofaiExtension",
   "DisplayName": "AdofaiExtension",
   "Author": "HYONSU",
-  "Version": "0.0.5",
+  "Version": "0.0.6",
   "AssemblyName": "AdofaiExtension.dll",
   "EntryMethod": "AdofaiExtension.Main.Load",
-  "Repository": ""
+  "Repository": "https://bot.adofai.gg/api/mods/AdofaiExtension/Repository.json"
 }
