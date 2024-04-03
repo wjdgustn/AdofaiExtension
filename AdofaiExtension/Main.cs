@@ -113,7 +113,8 @@ namespace AdofaiExtension {
 
                 LevelPath = path;
 
-                SceneManager.LoadScene("scnEditor");
+                GCS.sceneToLoad = GCNS.sceneEditor;
+                scrController.instance.StartLoadingScene();
 
                 Mod.Logger.Log("loaded editor scene");
             }

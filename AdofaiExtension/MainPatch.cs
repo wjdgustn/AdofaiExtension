@@ -1,7 +1,20 @@
 using HarmonyLib;
+using System;
 using UnityEngine;
 
 namespace AdofaiExtension.MainPatch {
+	[HarmonyPatch(typeof(scnSplash), "Start")]
+	internal static class onSplash {
+		internal static bool Prefix() {
+			var arguments = Environment.GetCommandLineArgs();
+			Debug.Log(arguments);
+			if (Main.LoadedLevel || arguments.Length < 2) return true;
+
+			ADOBase.GoToLevelSelect();
+			return false;
+		}
+	}
+	
     [HarmonyPatch(typeof(scnLevelSelect), "Awake")]
     internal static class onStart {
         internal static void Postfix() {
@@ -19,8 +32,6 @@ namespace AdofaiExtension.MainPatch {
                 scnEditor.instance.StartCoroutine("OpenLevelCo", Main.LevelPath);
                 Main.LevelPath = null;
                 Main.LoadedLevel = true;
-
-                scnEditor.instance.SwitchToEditMode();
             }
         }
     }
